@@ -107,3 +107,49 @@ for (let [i, item] of menu.entries()) console.log(`${i + 1} -> ${item}`);
 
 console.log(restaurant);
 console.log(openingHours);
+
+// sets
+const inputArray = [1, 2, 1, 3, 2, 3, 4, 5, 5, 4];
+const inputSet = new Set(inputArray);
+inputSet.add(6);
+inputSet.delete(2);
+console.log(inputSet, inputSet.size, inputSet.has(8));
+inputSet.clear();
+
+// maps
+const rest = new Map();
+rest.set('name', 'Bihari Zaika');
+rest.set(1, 'Patna');
+rest.set(2, 'Bhagalpur').set(true, 'We are open').set(false, 'We are closed');
+
+console.log(rest.get(1));
+
+for (let [i, j] of rest.entries()) {
+  console.log(i, j);
+}
+const question = new Map();
+question
+  .set('question', 'Best programming language in world ?')
+  .set(1, 'Java')
+  .set(2, 'Python')
+  .set(3, 'JavaScript')
+  .set('correct', 3)
+  .set(true, 'You are correct !!💥')
+  .set(false, 'Please try again ⛔️');
+
+console.log(question);
+const handleEventOnClick = () => {
+  document.querySelector('h1').textContent = question.get('question');
+
+  const choice = prompt(
+    `Enter your choice 1) ${question.get(1)} 2) ${question.get(
+      2
+    )} 3) ${question.get(3)}`
+  );
+  question.get('correct') == choice && console.log(question.get(true));
+  question.get('correct') == choice || console.log(question.get(false));
+};
+
+console.log(...[...question]);
+
+//document.querySelector('h1').addEventListener('click', handleEventOnClick);

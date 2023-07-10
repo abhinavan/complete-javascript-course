@@ -90,9 +90,9 @@ console.log(avg / Object.values(game.odds).length);
 const [...players] = Object.entries(game.scored);
 const scorers = {};
 const counts = {};
-for (let [i, player] of players) {
+for (let [, player] of players) {
   counts[player] = counts[player] ? counts[player] + 1 : 1;
-  console.log(player, counts[player]);
+  // console.log(player, counts[player]);
 }
 for (let player of Object.values(game.scored)) {
   scorers[player] = counts[player];
