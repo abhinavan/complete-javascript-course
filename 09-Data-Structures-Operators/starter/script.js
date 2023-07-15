@@ -153,3 +153,21 @@ const handleEventOnClick = () => {
 console.log(...[...question]);
 
 //document.querySelector('h1').addEventListener('click', handleEventOnClick);
+
+const airlines = 'Indigo Airlines';
+const plane = 'A320';
+const checkIfMiddleSeat = seat => {
+  // B and E are middle seats
+  // number character will be row and alphabet are seat position
+  const isMiddleSeat = seat.slice(2) == 'B' || seat.slice == 'E' ? true : false;
+  return isMiddleSeat;
+};
+
+checkIfMiddleSeat('11B') && console.log(`Middle Seat`);
+
+const x = 'abhinav abhinav anand';
+console.log(x.replace('abhinav', 'Mr.'));
+
+const y = 'a very nice string';
+
+console.log(...y.split(' '));
