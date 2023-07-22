@@ -69,6 +69,22 @@ const calcAndPrintBalance = movements => {
   return movements.reduce((sum, move) => sum + move);
 };
 
+const displaySummary = movements => {
+  labelSumIn.textContent = `${movements
+    .filter(move => move > 0)
+    .reduce((sum, move) => sum + move)} €`;
+
+  labelSumOut.textContent = `${Math.abs(
+    movements.filter(move => move < 0).reduce((sum, move) => sum + move)
+  )} €`;
+
+  labelSumInterest.textContent = `${movements
+    .filter(move => move > 0)
+    .map(move => (move * 1.2) / 100)
+    .filter(move => move >= 1)
+    .reduce((sum, move) => sum + move)} €`;
+};
+
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
   movements.forEach((move, i) => {
@@ -79,6 +95,7 @@ const displayMovements = function (movements) {
   </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
     labelBalance.textContent = `${calcAndPrintBalance(movements)} €`;
+    displaySummary(movements);
   });
 };
 displayMovements(account1.movements);
