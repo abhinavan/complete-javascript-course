@@ -2,67 +2,6 @@
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-// BANKIST APP
-
-// Data
-const account1 = {
-  owner: 'Jonas Schmedtmann',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-  interestRate: 1.2, // %
-  pin: 1111,
-};
-
-const account2 = {
-  owner: 'Jessica Davis',
-  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-  interestRate: 1.5,
-  pin: 2222,
-};
-
-const account3 = {
-  owner: 'Steven Thomas Williams',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
-};
-
-const account4 = {
-  owner: 'Sarah Smith',
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
-  pin: 4444,
-};
-
-const accounts = [account1, account2, account3, account4];
-
-// Elements
-const labelWelcome = document.querySelector('.welcome');
-const labelDate = document.querySelector('.date');
-const labelBalance = document.querySelector('.balance__value');
-const labelSumIn = document.querySelector('.summary__value--in');
-const labelSumOut = document.querySelector('.summary__value--out');
-const labelSumInterest = document.querySelector('.summary__value--interest');
-const labelTimer = document.querySelector('.timer');
-
-const containerApp = document.querySelector('.app');
-const containerMovements = document.querySelector('.movements');
-
-const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector('.form__btn--transfer');
-const btnLoan = document.querySelector('.form__btn--loan');
-const btnClose = document.querySelector('.form__btn--close');
-const btnSort = document.querySelector('.btn--sort');
-
-const inputLoginUsername = document.querySelector('.login__input--user');
-const inputLoginPin = document.querySelector('.login__input--pin');
-const inputTransferTo = document.querySelector('.form__input--to');
-const inputTransferAmount = document.querySelector('.form__input--amount');
-const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // LECTURES
 
 const currencies = new Map([
@@ -71,6 +10,48 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
 /////////////////////////////////////////////////
+// splice method deletes the element of array present in the index provided
+
+// let arr = ['a', 'b', 'c', 'd', 'e'];
+// console.log(arr.splice(arr.length - 1));
+// console.log(arr);
+
+// // reverse an array
+// arr = ['a', 'b', 'c', 'd', 'e'];
+// console.log(arr.reverse());
+
+// // concat an array
+
+// console.log(typeof arr.concat(arr));
+// console.log(arr.at(3));
+// continue and break can not be used in foreach method
+// movements.forEach((move, index, arr) =>
+//   move > 0
+//     ? console.log(`Movement ${index + 1} : Deposited ${Math.abs(move)} `)
+//     : console.log(`Movement ${index + 1} : Withdrawn ${Math.abs(move)}`)
+// );
+
+// currencies.forEach((value, key) => {
+//   console.log(`${key} : ${value}`);
+// });
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// map method
+const conversionRate = 80.0;
+const movementsiInInr = movements.map(move => move * conversionRate);
+console.log(movementsiInInr);
+
+const movementsDescripton = movements.map((move, i) => {
+  let type = move > 0 ? `Deposited` : `Withdrawn`;
+  return `Movement ${i + 1} : ${type} ${Math.abs(move)} `;
+});
+
+const deposit = movementsiInInr.filter(move => move > 0);
+
+console.log(movements.reduce((sum, move) => sum + move, 10000));
+
+console.log(
+  movements.reduce((element, move) => (move > element ? move : element))
+);
+
+console.log(deposit);
