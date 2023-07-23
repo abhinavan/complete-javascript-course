@@ -21,7 +21,7 @@ const currencies = new Map([
 // arr = ['a', 'b', 'c', 'd', 'e'];
 // console.log(arr.reverse());
 
-// // concat an array
+// // concat an arrays
 
 // console.log(typeof arr.concat(arr));
 // console.log(arr.at(3));
@@ -55,3 +55,8 @@ console.log(
 );
 
 console.log(deposit);
+
+const arr = [[1, 2, 3], 4, [5, 6, 7], 9, [10, 11, [12, 13, [14, 15]]]];
+const arrFlat = arr.flat(3);
+console.log(arr);
+console.log(arrFlat);

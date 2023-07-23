@@ -62,10 +62,28 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-// (() => {
-//   document.querySelector('.app').style.opacity = 100;
-// })();
+// // (() => {
+// //   document.querySelector('.app').style.opacity = 100;
+// // })();
+// // calculating totalMovement total using flat method
+// const calculateTotalMovementsValue = accounts => {
+//   console.log(
+//     accounts
+//       .map(account => account.movements)
+//       .flat()
+//       .reduce((sum, move) => sum + move, 0)
+//   );
+// };
+// calculateTotalMovementsValue(accounts);
 
+// // calculating total movement using flatmap method (only have depth 1 for flattening)
+// const calculateTotalMovementsValueUsingFlatMap = accounts =>
+//   console.log(
+//     accounts
+//       .flatMap(account => account.movements)
+//       .reduce((sum, move) => sum + move, 0)
+//   );
+// calculateTotalMovementsValueUsingFlatMap(accounts);
 const calcAndPrintBalance = movements => {
   return movements.reduce((sum, move) => sum + move);
 };
@@ -86,9 +104,12 @@ const displaySummary = account => {
     .reduce((sum, move) => sum + move)} €`;
 };
 
-const displayMovements = function (account) {
+const displayMovements = function (account, sort = false) {
   containerMovements.innerHTML = '';
-  account.movements.forEach((move, i) => {
+  let sortedMovements = sort
+    ? account.movements.slice().sort((a, b) => a - b)
+    : account.movements;
+  sortedMovements.forEach((move, i) => {
     const type = move > 0 ? 'deposit' : 'withdrawal';
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
@@ -111,8 +132,6 @@ const createUserName = accounts => {
   });
 };
 createUserName(accounts);
-
-console.log(accounts);
 
 const helloUser = account =>
   account && `Hello, ${account.owner.split(' ').at(0)}`;
@@ -189,4 +208,12 @@ btnClose.addEventListener('click', function (e) {
   e.preventDefault();
   closeAccount(inputCloseUsername.value, inputClosePin.value);
   inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(!sorted);
+  displayMovements(currAccountAfterLogin, !sorted);
+  sorted = !sorted;
 });
