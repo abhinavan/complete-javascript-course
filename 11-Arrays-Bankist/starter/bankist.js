@@ -149,6 +149,14 @@ const doTransfer = (transferTo, amount) => {
   }
 };
 
+const closeAccount = (user, pass) => {
+  const index = accounts.findIndex(
+    account => account.username == user && account.pin == pass
+  );
+  accounts.splice(index, 1);
+  index >= 0 ? changeOpacity(0) : console.log('No account matched');
+};
+
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   doLogin(inputLoginUsername.value, inputLoginPin.value);
@@ -159,4 +167,10 @@ btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   doTransfer(inputTransferTo.value, inputTransferAmount.value);
   inputTransferAmount.value = inputTransferTo.value = '';
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  closeAccount(inputCloseUsername.value, inputClosePin.value);
+  inputCloseUsername.value = inputClosePin.value = '';
 });
