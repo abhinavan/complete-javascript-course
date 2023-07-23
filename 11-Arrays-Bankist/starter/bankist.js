@@ -6,34 +6,35 @@
 
 // Data
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Renuka Sharma Tiwary',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
 };
 
 const account2 = {
-  owner: 'Jessica Davis',
+  owner: 'Abhinav Anand',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
 };
 
 const account3 = {
-  owner: 'Steven Thomas Williams',
+  owner: 'Arunit Raj',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
 };
 
 const account4 = {
-  owner: 'Sarah Smith',
+  owner: 'Akanksha Priya',
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
 };
 
 const accounts = [account1, account2, account3, account4];
+let currAccountAfterLogin = null;
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -125,6 +126,7 @@ const doLogin = (user, pass) => {
   account && displayMovements(account);
   account && changeOpacity(100);
   labelWelcome.textContent = helloUser(account);
+  currAccountAfterLogin = account;
 };
 
 const doTransfer = (transferTo, amount) => {
@@ -148,6 +150,14 @@ const doTransfer = (transferTo, amount) => {
       displayMovements(currentAccount);
   }
 };
+// loan will be sanctioned if there is any deposit in account with at least 10% of requested amount
+const sanctionLoan = requestedAmount =>
+  requestedAmount > 0 &&
+  currAccountAfterLogin.movements.some(
+    movement => movement >= requestedAmount * 0.1
+  ) &&
+  setTimeout(currAccountAfterLogin.movements.push(requestedAmount), 5 * 1000) &&
+  displayMovements(currAccountAfterLogin);
 
 const closeAccount = (user, pass) => {
   const index = accounts.findIndex(
@@ -167,6 +177,12 @@ btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   doTransfer(inputTransferTo.value, inputTransferAmount.value);
   inputTransferAmount.value = inputTransferTo.value = '';
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  sanctionLoan(Number(inputLoanAmount.value));
+  inputLoanAmount.value = '';
 });
 
 btnClose.addEventListener('click', function (e) {
