@@ -61,44 +61,43 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-(() => {
-  document.querySelector('.app').style.opacity = 100;
-})();
+// (() => {
+//   document.querySelector('.app').style.opacity = 100;
+// })();
 
 const calcAndPrintBalance = movements => {
   return movements.reduce((sum, move) => sum + move);
 };
 
-const displaySummary = movements => {
-  labelSumIn.textContent = `${movements
+const displaySummary = account => {
+  labelSumIn.textContent = `${account.movements
     .filter(move => move > 0)
     .reduce((sum, move) => sum + move)} €`;
 
   labelSumOut.textContent = `${Math.abs(
-    movements.filter(move => move < 0).reduce((sum, move) => sum + move)
+    account.movements.filter(move => move < 0).reduce((sum, move) => sum + move)
   )} €`;
 
-  labelSumInterest.textContent = `${movements
+  labelSumInterest.textContent = `${account.movements
     .filter(move => move > 0)
-    .map(move => (move * 1.2) / 100)
+    .map(move => (move * account.interestRate) / 100)
     .filter(move => move >= 1)
     .reduce((sum, move) => sum + move)} €`;
 };
 
-const displayMovements = function (movements) {
+const displayMovements = function (account) {
   containerMovements.innerHTML = '';
-  movements.forEach((move, i) => {
+  account.movements.forEach((move, i) => {
     const type = move > 0 ? 'deposit' : 'withdrawal';
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
     <div class="movements__value">${Math.abs(move)}€</div>
   </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
-    labelBalance.textContent = `${calcAndPrintBalance(movements)} €`;
-    displaySummary(movements);
+    labelBalance.textContent = `${calcAndPrintBalance(account.movements)} €`;
+    displaySummary(account);
   });
 };
-displayMovements(account1.movements);
 
 const createUserName = accounts => {
   accounts.forEach(acc => {
@@ -110,4 +109,24 @@ const createUserName = accounts => {
   });
 };
 createUserName(accounts);
+
 console.log(accounts);
+
+const helloUser = account =>
+  account && `Hello, ${account.owner.split(' ').at(0)}`;
+// do Login
+const changeOpacity = opacity => (containerApp.style.opacity = opacity);
+
+const doLogin = (user, pass) => {
+  const account = accounts.find(
+    account => account.username == user && account.pin == pass
+  );
+  account && displayMovements(account);
+  account && changeOpacity(100);
+  labelWelcome.textContent = helloUser(account);
+};
+
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  doLogin(inputLoginUsername.value, inputLoginPin.value);
+});
