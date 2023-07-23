@@ -94,7 +94,8 @@ const displayMovements = function (account) {
     <div class="movements__value">${Math.abs(move)}€</div>
   </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
-    labelBalance.textContent = `${calcAndPrintBalance(account.movements)} €`;
+    account.balance = calcAndPrintBalance(account.movements);
+    labelBalance.textContent = `${account.balance} €`;
     displaySummary(account);
   });
 };
@@ -126,7 +127,36 @@ const doLogin = (user, pass) => {
   labelWelcome.textContent = helloUser(account);
 };
 
+const doTransfer = (transferTo, amount) => {
+  if (amount > 0) {
+    const recieverAccount = accounts.find(
+      account => account.username == transferTo
+    );
+    const currentUserFirstName = labelWelcome.textContent
+      .split(',')
+      .at(1)
+      .trim();
+    const currentAccount = accounts.find(
+      account => account.owner.split(' ').at(0) == currentUserFirstName
+    );
+    currentAccount.username != recieverAccount.username &&
+      currentAccount &&
+      recieverAccount &&
+      amount <= currentAccount.balance &&
+      currentAccount.movements.push(Number(amount - amount * 2)) &&
+      recieverAccount.movements.push(Number(amount)) &&
+      displayMovements(currentAccount);
+  }
+};
+
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   doLogin(inputLoginUsername.value, inputLoginPin.value);
+  inputLoginUsername.value = inputLoginPin.value = '';
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  doTransfer(inputTransferTo.value, inputTransferAmount.value);
+  inputTransferAmount.value = inputTransferTo.value = '';
 });
