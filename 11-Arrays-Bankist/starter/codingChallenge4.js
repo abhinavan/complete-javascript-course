@@ -101,10 +101,6 @@ console.log(dogsEatingOkayAmount);
 
 // task 7
 console.log(dogs.filter(callbackPredicate));
-/**
- * 8. Create a shallow copy of the 'dogs' array and sort it by recommended food
-portion in an ascending order (keep in mind that the portions are inside the
-array's objects 😉)
- */
 
+// task 8
 console.log(dogs.slice().sort((a, b) => a.recommendedFood - b.recommendedFood));

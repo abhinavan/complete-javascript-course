@@ -66,3 +66,5 @@ const x = Array.from({ length: 100 }, (_, i) =>
   Math.trunc(Math.random() * 100)
 );
 console.log(x);
+
+setTimeout(() => console.log('this will be printed after 3 seconds'), 3000);

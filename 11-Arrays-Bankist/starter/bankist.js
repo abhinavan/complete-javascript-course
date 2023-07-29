@@ -137,8 +137,9 @@ const helloUser = account =>
   account && `Hello, ${account.owner.split(' ').at(0)}`;
 // do Login
 const changeOpacity = opacity => (containerApp.style.opacity = opacity);
-
+let timer;
 const doLogin = (user, pass) => {
+  clearInterval(timer);
   const account = accounts.find(
     account => account.username == user && account.pin == pass
   );
@@ -146,6 +147,27 @@ const doLogin = (user, pass) => {
   account && changeOpacity(100);
   labelWelcome.textContent = helloUser(account);
   currAccountAfterLogin = account;
+
+  const startLogoutTimer = () => {
+    // set timer to 5 mins
+    let time = 300;
+
+    // call the timer every second
+    // in each call print remaining time to UI
+    const timer = setInterval(function () {
+      const min = String(Math.trunc(time / 60)).padStart(2, 0),
+        sec = String(time % 60).padStart(2, 0);
+      labelTimer.textContent = `${min} : ${sec}`;
+      time--;
+      //when 0 seconds , logout the user
+      if (time <= 0) {
+        clearInterval(timer);
+        labelWelcome.textContent = 'Login to get started ';
+        changeOpacity(0);
+      }
+    }, 1000);
+  };
+  startLogoutTimer();
 };
 
 const doTransfer = (transferTo, amount) => {
