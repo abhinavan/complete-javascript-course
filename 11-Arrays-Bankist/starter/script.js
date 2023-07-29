@@ -60,3 +60,9 @@ const arr = [[1, 2, 3], 4, [5, 6, 7], 9, [10, 11, [12, 13, [14, 15]]]];
 const arrFlat = arr.flat(3);
 console.log(arr);
 console.log(arrFlat);
+
+// to create 100 random numbers in an array
+const x = Array.from({ length: 100 }, (_, i) =>
+  Math.trunc(Math.random() * 100)
+);
+console.log(x);
